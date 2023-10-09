@@ -36,9 +36,10 @@ RV NO_IMPLEMENTATION_PRAGMAS
 RV NO_IMPLICIT_ALIASING
 RV NO_IMPLICIT_LOOPS
 RV STATIC_DISPATCH_TABLES
+RV MAX_TASK_ENTRIES=1
 RV MAX_TASKS=1+
 
-U main%b		main.adb		d619e612 NE OO SU
+U main%b		main.adb		a081ed61 NE OO SU
 W ada%s			ada.ads			ada.ali
 W ada.containers%s	a-contai.ads		a-contai.ali
 Z ada.containers.generic_array_sort%s
@@ -72,6 +73,7 @@ Z system.storage_pools.subpools%s  s-stposu.adb	s-stposu.ali
 Z system.stream_attributes%s  s-stratt.adb	s-stratt.ali
 Z system.task_info%s	s-tasinf.adb		s-tasinf.ali
 Z system.tasking%s	s-taskin.adb		s-taskin.ali
+Z system.tasking.rendezvous%s  s-tasren.adb	s-tasren.ali
 Z system.tasking.stages%s  s-tassta.adb		s-tassta.ali
 
 D ada.ads		20210520051132 76789da1 ada%s
@@ -99,7 +101,7 @@ D interfac.ads		20210520051132 edec285f interfaces%s
 D i-c.ads		20210520051132 d9beded9 interfaces.c%s
 D i-cstrin.ads		20210520051132 341d0ddf interfaces.c.strings%s
 D i-cstrea.ads		20210520051132 e53d8b8e interfaces.c_streams%s
-D main.adb		20230929210206 8b203e58 main%b
+D main.adb		20231009102020 fdb8352b main%b
 D system.ads		20210520051136 2ffa5114 system%s
 D s-addima.ads		20210520051132 a1ec9d3a system.address_image%s
 D s-atacco.ads		20210520051132 4c36d12f system.address_to_access_conversions%s
@@ -134,6 +136,9 @@ D s-tasinf.ads		20210520051128 601f6b72 system.task_info%s
 D s-taspri.ads		20210520051128 a1350802 system.task_primitives%s
 D s-taprop.ads		20210520051128 6eefbe12 system.task_primitives.operations%s
 D s-taskin.ads		20210520051128 88fba9ad system.tasking%s
+D s-taprob.ads		20210520051128 acd6094d system.tasking.protected_objects%s
+D s-tpoben.ads		20210520051128 60ad3dae system.tasking.protected_objects.entries%s
+D s-tasren.ads		20210520051128 a67a9949 system.tasking.rendezvous%s
 D s-tassta.ads		20210520051128 cca55c94 system.tasking.stages%s
 D s-traent.ads		20210520051134 26a8d361 system.traceback_entries%s
 D s-unstyp.ads		20210520051134 2b077493 system.unsigned_types%s
@@ -151,43 +156,44 @@ X 6 a-convec.ads
 62I9 Index_Type 26|15r56
 63+9 Element_Type 26|15r79
 74k24*Vectors 875e27 26|3w21 15r47
-91R9 Vector<9|43R9> 26|17r31[15] 31r29[15] 35r55[15] 51r33[15]
-175V13 Length{2|22I9} 26|39s45[15] 40s34[15]
-190U14 Clear 26|52s17[15]
-483U14 Append 26|41s20[15] 45s21[15] 59s19[15]
-533U14 Delete_First 26|42s25[15] 46s26[15]
-538U14 Delete_Last 26|47s26[15]
-567V13 First_Element{integer} 26|41s39[15] 44s38[15]
-578V13 Last_Element{integer} 26|44s65[15]
+91R9 Vector<9|43R9> 26|17r31[15] 34r29[15] 40r55[15] 56r33[15]
+175V13 Length{2|22I9} 26|44s45[15] 45s34[15]
+190U14 Clear 26|57s17[15]
+483U14 Append 26|46s20[15] 50s21[15] 65s19[15]
+533U14 Delete_First 26|47s25[15] 51s26[15]
+538U14 Delete_Last 26|52s26[15]
+567V13 First_Element{integer} 26|46s39[15] 49s38[15]
+578V13 Last_Element{integer} 26|49s65[15]
 X 11 a-iteint.ads
 24h9 Forward_Iterator
 32h9 Reversible_Iterator<24R9[6|119]>
 X 19 a-textio.ads
 58K13*Text_IO 725e16 26|1w10 2w10 2r27
-506U14*Put_Line 26|28s10 35s7 36s7 51s10
+506U14*Put_Line 26|31s10 40s7 41s7 56s10
 X 26 main.adb
-5U11*Main 5b11 76l5 76t9
-6i4 Count_Wave{integer} 36r43 37m7 37r21
-7i4 Count_Number{integer} 8r26 58r19
-8f4 Size{float} 69r10 70m7 70r15
-9i4 Coun{integer} 71m7 71r15 74r14
-11U14 Calculate 11>25 13b14 66l8 66t17 74s4
-11i25 Data{integer} 13b25 21r33
-15K12 Data_Vectors[6|74] 16r8 17r18 31r16 35r42 51r20
-17r4 Vector_Data{6|91R9[15]} 35r69 39r33 40r22 41r27 42m13 42r13 44r26 44r53
-. 46m14 46r14 47m14 47r14 50m10 51r47 59m7 59r7
-19T14 Task_Wave 20r32 25b14 54l11 54t20 63r23
-20P9 Task_Ptr(19T14) 21r42
-21A9 Task_Array(20P9)<integer> 23r12
-23a4 Tasks{21A9} 62r14 63m7
-26V16 Sum{integer} 26b16 26>21 26>27 30l11 30t14 44s22
-26i21 Num1{integer} 28r35 29r17
-26i27 Num2{integer} 28r66 29r24
-31r7 Result{6|91R9[15]} 41m13 41r13 45m14 45r14 50r25 52m10 52r10
-32i7 sum1{integer} 44m14 45r28
-39i14 I{integer}
-58i9 I{integer} 59r26
-62i9 I{integer} 63r13
+5U11*Main 5b11 83l5 83t9
+6i4 Count_Wave{integer} 41r43 42m7 42r21
+7i4 Count_Number{integer} 8r26 64r19
+8f4 Size{float} 76r10 77m7 77r15
+9i4 Coun{integer} 78m7 78r15 81r14
+11U14 Calculate 11>25 13b14 73l8 73t17 81s4
+11i25 Data{integer} 13b25 24r33
+15K12 Data_Vectors[6|74] 16r8 17r18 34r16 40r42 56r20
+17r4 Vector_Data{6|91R9[15]} 40r69 44r33 45r22 46r27 47m13 47r13 49r26 49r53
+. 51m14 51r14 52m14 52r14 55m10 56r47 65m7 65r7
+19T14 Task_Wave 21l11 21e20 23r32 28b14 60l11 60t20 69r26
+20Y13 Start 38b17 58l14 58t19 70s19
+23P9 Task_Ptr(19T14) 24r42
+24A9 Task_Array(23P9)<integer> 26r15
+26a7 Tasks{24A9} 68r14 69m10 70r10
+29V16 Sum{integer} 29b16 29>21 29>27 33l11 33t14 49s22
+29i21 Num1{integer} 31r35 32r17
+29i27 Num2{integer} 31r66 32r24
+34r7 Result{6|91R9[15]} 46m13 46r13 50m14 50r14 55r25 57m10 57r10
+35i7 sum1{integer} 49m14 50r28
+44i14 I{integer}
+64i9 I{integer} 65r26
+68i9 I{integer} 69r16 70r16
 X 27 system.ads
 67M9*Address
 X 41 s-memory.ads

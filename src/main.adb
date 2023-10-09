@@ -16,11 +16,14 @@ procedure Main is
    use Data_Vectors;
    Vector_Data : Data_Vectors.Vector;
 
-   task type Task_Wave;
+   task type Task_Wave is
+      entry Start;
+      end Task_Wave;
+
    type Task_Ptr is access all Task_Wave;
    type Task_Array is array (1..Data) of Task_Ptr;
 
-   Tasks : Task_Array;
+      Tasks : Task_Array;
 
    task body Task_Wave is
       function Sum (Num1, Num2 : Integer) return Integer is
@@ -32,6 +35,8 @@ procedure Main is
       sum1 : Integer;
 
       begin
+         accept Start do
+
       Put_Line ("Pre-existing array: " & Data_Vectors.Vector'Image (Vector_Data));
       Put_Line ("Wave: " & Integer'Image (Count_Wave));
       Count_Wave := Count_Wave + 1;
@@ -50,6 +55,7 @@ procedure Main is
          Vector_Data := Result;
          Put_Line (Data_Vectors.Vector'Image (Vector_Data));
          Result.Clear;
+         end Start;
 
       end Task_Wave;
 
@@ -60,7 +66,8 @@ procedure Main is
     end loop;
 
     for I in Tasks'Range loop
-      Tasks(I) := new Task_Wave;
+         Tasks(I) := new Task_Wave;
+         Tasks(I).Start;
     end loop;
 
    end Calculate;
